@@ -143,12 +143,17 @@
         
         <script type="text/javascript">
             $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-            $(document).ready(function(){
+			
+			$(document).ready(function(){
                               // Do the following when the page is finished loading
                               // When a field named 'miles' is changed ...
                               $('input[name="miles"]').change(
                                                               // ... execute this function
                                                               function(){
+															  var e_date = $("#date").val();
+															  var e_time = $("#time").val();
+															  var e_brevet = $("#brev_dist").val();
+															  var e_units = $("#units").val();
                                                               var e_miles = $(this).val();
                                                               var open_target = $(this).parents(".row").find(".open_time");
                                                               var close_target = $(this).parents(".row").find(".close_time");
@@ -158,7 +163,9 @@
                                                               // AJAX request
                                                               $.getJSON($SCRIPT_ROOT + '/_calc_times',
                                                                         // The object to pass to the server
-                                                                        { miles: e_miles },
+                                                                        { miles: e_miles, date: e_date
+																			time: e_time, brevet_dist:e_brevet
+																			units: e_units},
                                                                         // The function to call with the response
                                                                         function(data) {
                                                                         var open_time = data.result;

@@ -150,8 +150,12 @@ def calc_times():
         end_days = 0
     else:
         end_days = end_hours//24
-        end_hours = end-hours%24
+        end_hours = end_hours%24
 
+		
+	endTime = (currentStart.replace(days=endaddDays ,hours=endaddhours, minutes=endaddminutes+endAdditive)).format("YYYY/MM/DD HH:mm")
+	startTime = (currentStart.replace(days=startaddDays ,hours=startaddhours, minutes=startaddminutes)).format("YYYY/MM/DD HH:mm")
+  
     return jsonify(result=dist)
 
 #################
