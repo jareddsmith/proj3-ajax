@@ -1,134 +1,176 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html> <head>
-<title>ACP Controle Times</title>
-
-  <!-- 'viewport' is used by bootstrap to respond to device size -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Javascript:  JQuery from a content distribution network (CDN) -->
-  <script
-     src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
-  </script>
-
-  <!-- Bootstrap includes javascript and css  (must follow jquery) -->
-  <link rel="stylesheet"
-   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-   <script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
-   </script>
-
-  <!-- <script type="text/javascript"  -->
-  <!--    src="/static/js/calc.js"> -->
-  <!-- </script> -->
+    <title>ACP Controle Times</title>
+    
+    <!-- 'viewport' is used by bootstrap to respond to device size -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Javascript:  JQuery from a content distribution network (CDN) -->
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+            </script>
+        
+        <!-- Bootstrap includes javascript and css  (must follow jquery) -->
+        <link rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+            <script
+                src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+                </script>
+            
+            <!-- <script type="text/javascript"  -->
+            <!--    src="/static/js/calc.js"> -->
+            <!-- </script> -->
 </head>
 
-   <!-- Our own style sheet -->
-   <link rel="stylesheet" href="/static/css/calc.css" />
+<!-- Our own style sheet -->
+<link rel="stylesheet" href="/static/css/calc.css" />
 
 <body>
-<!-- bootstrap requires a 'container' div around content -->
-<div class="container">
-
-<h1>ACP Brevet Closing times</h1>
-
-  <!--
-  -- If there are any warnings or other messages from a prior
-  -- request to the server, 
-  -- they appear above the rest of the content, just until the next 
-  -- action.  (This is only on request/response transactions that
-  -- result in regenerating the page, not on every xmlhttp request.) 
-  -->
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-
-<!-- Design on bootstrap grid -->
-<form role="form">
-<div class="row">
-  <div class="col-md-2">
-    <input type="text" class="form-control"
-     name="miles" value="Distance in miles"/>
-  </div>
-  <div class="col-md-4">
-    <input type="text" class="form-control"
-      name="location" value="location" />
-  </div>
-  <div class="col-md-4">
-    <span class="times form-control">(times)</span>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-2">
-    <input type="text" class="form-control"
-     name="miles" value="Distance in miles"/>
-  </div>
-  <div class="col-md-4">
-    <input type="text" class="form-control"
-      name="location" value="location" />
-  </div>
-  <div class="col-md-4">
-    <span class="times form-control">(times)</span>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-2">
-    <input type="text" class="form-control"
-     name="miles" value="Distance in miles"/>
-  </div>
-  <div class="col-md-4">
-    <input type="text" class="form-control"
-      name="location" value="location" />
-  </div>
-  <div class="col-md-4">
-    <span class="times form-control">(times)</span>
-  </div>
-</div>
-</form>
-
-<script type="text/javascript">
-
-  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
-  $(document).ready(function(){
-   // Do the following when the page is finished loading
-
-      // When a field named 'miles' is changed ...
-      $('input[name="miles"]').change(
-          // ... execute this function
-          function(){
-              var e_miles = $(this).val();
-
-              var target = $(this).parents(".row").find(".times");
-
-              // DEBUG: How do I replace the 'times' field?
-              // alert("Content of the field I want to change: " +
-              //   target.html());
-
-              // AJAX request
-              $.getJSON($SCRIPT_ROOT + '/_calc_times',
-                  // The object to pass to the server
-                  { miles: e_miles },
-                  // The function to call with the response
-                  function(data) {
-                     var times = data.result;
-                     // alert("Got a response: " +  times);
-                     target.text(times);
-                  }); // End of the call to getJSON
-          });  // End of the function to be called when field changes
-              
-
-     });   // end of what we do on document ready
-
-</script>
-
-</div>
+    <!-- bootstrap requires a 'container' div around content -->
+    <div class="container">
+        
+        <h1>ACP Brevet Opening and Closing times</h1>
+        
+        <!--
+         -- If there are any warnings or other messages from a prior
+         -- request to the server,
+         -- they appear above the rest of the content, just until the next
+         -- action.  (This is only on request/response transactions that
+         -- result in regenerating the page, not on every xmlhttp request.)
+         -->
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        
+        <hr>
+        
+        <!-- Design on bootstrap grid -->
+        <form role="form">
+            <label>Starting Date:</label>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text"
+                    id="date" placeholder="MM/DD/YYYY"
+                    value=""/>
+                </div>
+            </div>
+            <br>
+            
+            <label>Starting Time (in 24 hour format):</label>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text"
+                    id="time" placeholder="HH:mm"
+                    value=""/>
+                </div>
+            </div>
+            <br>
+            
+            <label>Total Distance of the Brevet (in Kilometers):</label>
+            <select id="brev_dist">
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="600">600</option>
+                <option value="1000">1000</option>
+            </select>
+            <br>
+            
+            <label>Units of Checkpoint Distance:</label>
+            <select id="units">
+                <option value="km">Kilometers</option>
+                <option value="mi">Miles</option>
+            </select>
+            <br>
+            
+            <hr>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Distance of Checkpoint:</label>
+                </div>
+                <div class="col-md-4">
+                    <label>Location:</label>
+                </div>
+                <div class="col-md-4">
+                    <label>Times:</label>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" value="0"/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" placeholder="Checkpoint"
+                    value=""/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+        </form>
+        
+        <script type="text/javascript">
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            $(document).ready(function(){
+                              // Do the following when the page is finished loading
+                              // When a field named 'miles' is changed ...
+                              $('input[name="miles"]').change(
+                                                              // ... execute this function
+                                                              function(){
+                                                              var e_miles = $(this).val();
+                                                              var open_target = $(this).parents(".row").find(".open_time");
+                                                              var close_target = $(this).parents(".row").find(".close_time");
+                                                              // DEBUG: How do I replace the 'times' field?
+                                                              // alert("Content of the field I want to change: " +
+                                                              //   target.html());
+                                                              // AJAX request
+                                                              $.getJSON($SCRIPT_ROOT + '/_calc_times',
+                                                                        // The object to pass to the server
+                                                                        { miles: e_miles },
+                                                                        // The function to call with the response
+                                                                        function(data) {
+                                                                        var open_time = data.result;
+                                                                        var close_time = data.result;
+                                                                        // alert("Got a response: " +  times);
+                                                                        open_target.text(open_time);
+                                                                        close_target.text(close_time);
+                                                                        }); // End of the call to getJSON
+                                                              });  // End of the function to be called when field changes
+                              
+                              });   // end of what we do on document ready
+            </script>
+        
+    </div>
 </body> </html>
