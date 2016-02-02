@@ -107,7 +107,151 @@
             <div class="row">
                 <div class="col-md-2">
                     <input type="text" class="form-control"
-                    name="miles" value="0"/>
+                    name="miles" value="0" disabled/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" placeholder="Checkpoint"
+                    value=""/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" placeholder="Checkpoint"
+                    value=""/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" placeholder="Checkpoint"
+                    value=""/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" placeholder="Checkpoint"
+                    value=""/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" placeholder="Checkpoint"
+                    value=""/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" placeholder="Checkpoint"
+                    value=""/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" placeholder="Checkpoint"
+                    value=""/>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"
+                    name="location" placeholder="(Optional)"
+                    value="" />
+                </div>
+                <div class="col-md-4">
+                    <span class="open_time form-control" disabled>Opening Time</span>
+                    <span class="close_time form-control" disabled>Closing Time</span>
+                </div>
+            </div>
+            <br>
+            
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="text" class="form-control"
+                    name="miles" placeholder="Checkpoint"
+                    value=""/>
                 </div>
                 <div class="col-md-4">
                     <input type="text" class="form-control"
@@ -143,18 +287,18 @@
         
         <script type="text/javascript">
             $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-			
+            
 			$(document).ready(function(){
                               // Do the following when the page is finished loading
                               // When a field named 'miles' is changed ...
                               $('input[name="miles"]').change(
                                                               // ... execute this function
                                                               function(){
-															  var e_date = $("#date").val();
-															  var e_time = $("#time").val();
-															  var e_brevet = $("#brev_dist").val();
-															  var e_units = $("#units").val();
                                                               var e_miles = $(this).val();
+                                                              var e_time = $("#time").val();
+                                                              var e_date = $("#date").val();
+                                                              var e_units = $("#units").val();
+                                                              var e_brev = $("#brev_dist").val();
                                                               var open_target = $(this).parents(".row").find(".open_time");
                                                               var close_target = $(this).parents(".row").find(".close_time");
                                                               // DEBUG: How do I replace the 'times' field?
@@ -163,13 +307,15 @@
                                                               // AJAX request
                                                               $.getJSON($SCRIPT_ROOT + '/_calc_times',
                                                                         // The object to pass to the server
-                                                                        { miles: e_miles, date: e_date
-																			time: e_time, brevet_dist:e_brevet
-																			units: e_units},
+                                                                        { miles: e_miles,
+                                                                        time: e_time,
+                                                                        date: e_date,
+                                                                        brev_dist: e_brev,
+                                                                        units: e_units},
                                                                         // The function to call with the response
                                                                         function(data) {
-                                                                        var open_time = data.result;
-                                                                        var close_time = data.result;
+                                                                        var open_time = data.result.open;
+                                                                        var close_time = data.result.close;
                                                                         // alert("Got a response: " +  times);
                                                                         open_target.text(open_time);
                                                                         close_target.text(close_time);

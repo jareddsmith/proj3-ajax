@@ -75,9 +75,7 @@ def calc_times():
     dist_unit = request.args.get('units', 0, type=str)
     dist = request.args.get('miles', 0, type=int)
     
-    print("********",date)
-    
-    date_time = "{} {}".format(str(date), time)
+    date_time = "{} {}".format(date, time)
     arrow_time = arrow.get(date_time, "MM/DD/YYYY HH:mm")
     
     min_limits = [15, 15, 15, 11.428, 13.333]
@@ -102,9 +100,19 @@ def calc_times():
                 max_spd = max_limits[change_list.index(change)]
                 min_spd = min_limits[change_list.index(change)]
                 break
-    
-    #Checks for if extra minutes needed to be added to the end times for
-    #certain conditions. For loop optimization in progress.
+
+    #Calculates the extra time that is need under certain conditions.
+    if dist >= 0:
+        for change in change_list:
+            if brev_dist == dist:
+                if dist >= brev_dist:
+                    dist = brev_dist
+                    if dist == 200 or dist == 1000:
+                        extra_time = 10
+                    elif dist == 400:
+                        extra_time = 20
+
+    #Calculates the times depending on the distance
     if dist in range(0,200):
         start_time = dist/max_spd + st_control[0]
         end_time = dist/min_spd
@@ -129,7 +137,7 @@ def calc_times():
         start_time = (dist-1300)/max_spd + st_control[5]
         end_time = (dist-600)/min_spd + end_control[0] + end_control[1] + end_control[2]
 
-    #Takes
+    #Takes the calculated time from above and seperates minutes from hours, respectively.
     start_mins, start_hours = math.modf(start_time)
     end_mins, end_hours = math.modf(end_time)
 
@@ -138,6 +146,7 @@ def calc_times():
 
     end_hours = int(end_hours)
     end_mins = round(end_mins*60)
+    end_mins = end_mins + extra_time
 
 
     if start_hours < 24:
@@ -151,12 +160,16 @@ def calc_times():
     else:
         end_days = end_hours//24
         end_hours = end_hours%24
+            
+    opening_time = arrow_time.replace(days=+start_days, hours=+start_hours, minutes=+start_mins)
+    closing_time = arrow_time.replace(days=+end_days, hours=+end_hours, minutes=+end_mins)
 
-		
-	endTime = (currentStart.replace(days=endaddDays ,hours=endaddhours, minutes=endaddminutes+endAdditive)).format("YYYY/MM/DD HH:mm")
-	startTime = (currentStart.replace(days=startaddDays ,hours=startaddhours, minutes=startaddminutes)).format("YYYY/MM/DD HH:mm")
-  
-    return jsonify(result=dist)
+    opening = opening_time.format("MM/DD HH:mm")
+    closing = closing_time.format("MM/DD HH:mm")
+
+    rslt = {"open": opening, "close": closing}
+    
+    return jsonify(result=rslt)
 
 #################
 #
