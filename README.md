@@ -3,7 +3,9 @@ Reimplement the RUSA ACP controle time calculator with flask and ajax
 
 ## Author
   Jared Smith
+  
   http://ix.cs.uoregon.edu/~jsmith/cis322/htbin/proj3-ajax
+  
   http://ix.cs.uoregon.edu:(5001-8000) Port is chosen at random each time the program is executed
   
 ## ACP controle times
